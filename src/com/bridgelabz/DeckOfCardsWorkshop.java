@@ -11,9 +11,11 @@
 package com.bridgelabz;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class DeckOfCardsWorkshop {
 	private static String[] suit = { "Spades", "Hearts", "Diamond", "Clubs" };
@@ -75,6 +77,30 @@ public class DeckOfCardsWorkshop {
 				tempArray[j] = temp;
 			}
 			deckOfCards[i] = tempArray;
+		}
+	}
+
+	/**
+	 * This method is distributing 9 cards to n players. Deck of cards after shuffle
+	 * are ordered by suit of cards. We need to make sure we distribute randomly
+	 * using cardIndex variable. cardIndex variable will be used to ensure a single
+	 * player does not get same family of cards
+	 * 
+	 * @param deckOfCards
+	 */
+	public void distributeCards(int numberOfPlayers) {
+		playerList.stream().sorted(Comparator.comparingInt(Player::getPlayerTurn)).collect(Collectors.toList());
+		for (int p = 0; p < numberOfPlayers; p++) {
+			int count = 0;
+			int cardIndex = 0;
+			Card[] cardSet = new Card[9];
+			while (count < 9) {
+				Card card = deck[cardIndex];
+				cardSet[count] = card;
+				cardIndex += 4;
+				count++;
+			}
+			playerList.get(p).setCard(cardSet);
 		}
 	}
 

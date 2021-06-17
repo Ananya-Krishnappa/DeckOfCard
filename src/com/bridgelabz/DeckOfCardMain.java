@@ -6,13 +6,13 @@ public class DeckOfCardMain {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter number of players");
-		int num = sc.nextInt();
+		int numOfPlayers = sc.nextInt();
 		DeckOfCardsWorkshop deckOfCard = new DeckOfCardsWorkshop();
 		deckOfCard.shuffleDeckOfCards();
 		deckOfCard.setupDeckOfCards();
-		deckOfCard.printDeck();
-		deckOfCard.addPlayer(num);
-		deckOfCard.orderPlayerTurn(num);
+		deckOfCard.addPlayer(numOfPlayers);
+		deckOfCard.orderPlayerTurn(numOfPlayers);
+		deckOfCard.distributeCards(numOfPlayers);
 		sc.close();
 	}
 }
