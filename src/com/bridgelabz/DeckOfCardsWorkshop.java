@@ -1,5 +1,5 @@
 /**
- * Purpose:to initialise deck of cards having suit ("Clubs", "Diamonds", "Hearts", "Spades")
+ * Purpose:to initialize deck of cards having suit ("Clubs", "Diamonds", "Hearts", "Spades")
  *  & Rank ("2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"). 
  *  Shuffle the cards using Random method and then distribute 9 Cards to 4 Players 
  *  and Print the Cards the received by the 4 Players.
@@ -12,7 +12,9 @@ package com.bridgelabz;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -24,6 +26,7 @@ public class DeckOfCardsWorkshop {
 	private static Card[] deck = new Card[52];
 	private static List<Player> playerList = new ArrayList<Player>();
 	private static Scanner sc = new Scanner(System.in);
+	Map<String, HashMap<String, Integer>> playerCardInfo = new HashMap<String, HashMap<String, Integer>>();
 
 	/**
 	 * initializing the deck of card
@@ -97,7 +100,7 @@ public class DeckOfCardsWorkshop {
 			while (count < 9) {
 				Card card = deck[cardIndex];
 				cardSet[count] = card;
-				cardIndex += 4;
+				cardIndex += 5;
 				count++;
 			}
 			playerList.get(p).setCard(cardSet);
@@ -123,5 +126,27 @@ public class DeckOfCardsWorkshop {
 			int turn = sc.nextInt();
 			playerList.get(i).setPlayerTurn(turn);
 		}
+	}
+
+	/**
+	 * Verifies each Player has got how many different types of cards like "Clubs",
+	 * "Diamonds", "Hearts", "Spades".
+	 */
+	public void displayPlayerCard() {
+		for (int i = 0; i < playerList.size(); i++) {
+			HashMap<String, Integer> cardInfo = new HashMap<String, Integer>();
+			Card[] cardArray = playerList.get(i).getCard();
+			for (int j = 0; j < cardArray.length; j++) {
+				if (cardInfo.containsKey(cardArray[j].getSuit())) {
+					Integer value = cardInfo.get(cardArray[j].getSuit());
+					cardInfo.put(cardArray[j].getSuit(), value + 1);
+				} else {
+					cardInfo.put(cardArray[j].getSuit(), Integer.valueOf(1));
+				}
+			}
+			playerCardInfo.put(playerList.get(i).getFirstname(), cardInfo);
+		}
+		for (Map.Entry<String, HashMap<String, Integer>> entry : playerCardInfo.entrySet())
+			System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
 	}
 }

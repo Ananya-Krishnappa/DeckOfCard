@@ -13,6 +13,7 @@ public class DeckOfCardMain {
 		deckOfCard.addPlayer(numOfPlayers);
 		deckOfCard.orderPlayerTurn(numOfPlayers);
 		deckOfCard.distributeCards(numOfPlayers);
+		deckOfCard.displayPlayerCard();
 		sc.close();
 	}
 }
