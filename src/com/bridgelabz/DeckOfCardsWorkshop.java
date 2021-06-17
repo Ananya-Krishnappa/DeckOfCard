@@ -11,6 +11,7 @@
 package com.bridgelabz;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
 
 public class DeckOfCardsWorkshop {
 	private static String[] suit = { "Spades", "Hearts", "Diamond", "Clubs" };
-	private static String[] rank = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace" };
+	private static String[] rank = { "Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King" };
 	private static String[][] deckOfCards = { suit, rank };
 	private static Card[] deck = new Card[52];
 	private static List<Player> playerList = new ArrayList<Player>();
@@ -91,11 +92,11 @@ public class DeckOfCardsWorkshop {
 	 * 
 	 * @param deckOfCards
 	 */
-	public void distributeCards(int numberOfPlayers) {
+	public void distributeCards() {
 		playerList.stream().sorted(Comparator.comparingInt(Player::getPlayerTurn)).collect(Collectors.toList());
-		for (int p = 0; p < numberOfPlayers; p++) {
+		for (int p = 0; p < playerList.size(); p++) {
 			int count = 0;
-			int cardIndex = 0;
+			int cardIndex = p;
 			Card[] cardSet = new Card[9];
 			while (count < 9) {
 				Card card = deck[cardIndex];
@@ -148,5 +149,45 @@ public class DeckOfCardsWorkshop {
 		}
 		for (Map.Entry<String, HashMap<String, Integer>> entry : playerCardInfo.entrySet())
 			System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+	}
+
+	/**
+	 * Displaying the cards in order of sequence starting from lower rank to higher
+	 * rank
+	 */
+	public void displayCardSortByRank() {
+		for (int i = 0; i < playerList.size(); i++) {
+			System.out.println("Player" + (i + 1) + " cards");
+			Card[] cardArray = playerList.get(i).getCard();
+			Arrays.sort(cardArray, new SortbySuit());
+			// Arrays.sort(cardArray, new SortbyRank());
+			for (int j = 0; j < cardArray.length; j++) {
+				System.out.println(cardArray[j]);
+			}
+			System.out.println();
+		}
+	}
+
+}
+
+class SortbySuit implements Comparator<Card> {
+
+	@Override
+	public int compare(Card card1, Card card2) {
+		if (card1.getSuit() == card2.getSuit()) {
+			return card1.getRank().compareTo(card2.getRank());
+		}
+		return card1.getSuit().compareTo(card2.getSuit());
+	}
+}
+
+class SortbyRank implements Comparator<Card> {
+
+	@Override
+	public int compare(Card card1, Card card2) {
+		if (card1.getRank() == card2.getRank()) {
+			return card1.getSuit().compareTo(card2.getSuit());
+		}
+		return card1.getRank().compareTo(card2.getRank());
 	}
 }

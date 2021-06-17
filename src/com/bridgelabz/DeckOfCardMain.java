@@ -12,8 +12,9 @@ public class DeckOfCardMain {
 		deckOfCard.setupDeckOfCards();
 		deckOfCard.addPlayer(numOfPlayers);
 		deckOfCard.orderPlayerTurn(numOfPlayers);
-		deckOfCard.distributeCards(numOfPlayers);
+		deckOfCard.distributeCards();
 		deckOfCard.displayPlayerCard();
+		deckOfCard.displayCardSortByRank();
 		sc.close();
 	}
 }
