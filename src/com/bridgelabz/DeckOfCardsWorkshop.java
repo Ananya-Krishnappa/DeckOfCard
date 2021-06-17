@@ -12,6 +12,7 @@ package com.bridgelabz;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class DeckOfCardsWorkshop {
@@ -25,7 +26,7 @@ public class DeckOfCardsWorkshop {
 	/**
 	 * initializing the deck of card
 	 */
-	public void gameSetUp() {
+	public void setupDeckOfCards() {
 		int i = 0;
 		for (String s : deckOfCards[0]) {
 			for (String value : deckOfCards[1]) {
@@ -38,6 +39,7 @@ public class DeckOfCardsWorkshop {
 	 * adding players to the game
 	 */
 	public void addPlayer(int numberOfPlayers) {
+		System.out.println("Enter players details");
 		if (numberOfPlayers >= 4) {
 			System.out.println("Maximum of 4 players is allowed");
 		} else {
@@ -52,6 +54,27 @@ public class DeckOfCardsWorkshop {
 					System.out.println(playerList.get(j));
 				}
 			}
+		}
+	}
+
+	/**
+	 * This method shuffles the deck of cards
+	 * 
+	 * @param deckOfCards
+	 */
+	public void shuffleDeckOfCards() {
+		Random rand = new Random();
+		for (int i = 0; i < deckOfCards.length; i++) {
+			String[] tempArray = deckOfCards[i];
+			for (int j = 0; j < tempArray.length; j++) {
+				// Random for remaining positions.
+				int r = j + rand.nextInt(tempArray.length - j);
+				// swapping the elements
+				String temp = tempArray[r];
+				tempArray[r] = tempArray[j];
+				tempArray[j] = temp;
+			}
+			deckOfCards[i] = tempArray;
 		}
 	}
 
